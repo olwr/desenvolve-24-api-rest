@@ -1,13 +1,15 @@
-import express from "express";
-import BookController from "../controllers/bookController.js";
+import express from 'express';
+import BookController from '../controllers/bookController.js';
+import pagination from '../middlewares/pagination.js';
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.get('/books', BookController.requestBooks);
-routes.get('/books/search', BookController.requestBookByPublisher);
-routes.get('/books/:id', BookController.requestBookById);
-routes.put('/books/:id', BookController.updateBookById);
-routes.post('/books', BookController.postBooks);
-routes.delete('/books/:id', BookController.deleteBookById);
+router
+  .get('/books', BookController.requestBooks, pagination)
+  .get('/books/search', BookController.requestBookByFilter, pagination)
+  .get('/books/:id', BookController.requestBookById)
+  .post('/books', BookController.postBooks)
+  .put('/books/:id', BookController.updateBookById)
+  .delete('/books/:id', BookController.deleteBookById);
 
-export default routes;
+export default router;

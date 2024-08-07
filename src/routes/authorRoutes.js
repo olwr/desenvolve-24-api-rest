@@ -1,12 +1,15 @@
-import express from "express";
-import AuthorController from "../controllers/authorController.js";
+import express from 'express';
+import AuthorController from '../controllers/authorController.js';
+import pagination from '../middlewares/pagination.js';
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.get('/author', AuthorController.requestAuthors);
-routes.get('/author/:id', AuthorController.requestAuthorById);
-routes.put('/author/:id', AuthorController.updateAuthorById);
-routes.post('/author', AuthorController.postAuthors);
-routes.delete('/author/:id', AuthorController.deleteAuthorById);
+router
+  .get('/author', AuthorController.requestAuthors, pagination)
+  .get('/author/search', AuthorController.requestAuthorByFilter, pagination)
+  .get('/author/:id', AuthorController.requestAuthorById)
+  .put('/author/:id', AuthorController.updateAuthorById)
+  .post('/author', AuthorController.postAuthors)
+  .delete('/author/:id', AuthorController.deleteAuthorById);
 
-export default routes;
+export default router;
